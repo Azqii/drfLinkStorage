@@ -18,6 +18,10 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("api/v1/", include("users.urls")),
-    path("api/v1/", include("links.urls")),
+    path("api/v1/users/", include("users.urls")),
+    path("api/v1/links/", include("links.urls")),
+
+    # Sing up / JWT auth / confirm emails / etc
+    path(r"auth/", include("djoser.urls")),
+    path(r"auth/", include("djoser.urls.jwt"))
 ]
