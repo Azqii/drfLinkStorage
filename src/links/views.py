@@ -1,7 +1,8 @@
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.filters import SearchFilter
 
 from .repository import LinkRepository
 from .serializers import LinkSerializer
@@ -13,14 +14,18 @@ class LinkViewSet(ModelViewSet):
     queryset = LinkRepository.get_links()
     serializer_class = LinkSerializer
     permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
+    filter_backends = (SearchFilter,)
+    search_fields = ("link_url", "description", "@description")
 
     def perform_create(self, serializer):
         serializer.save(added_by=self.request.user)
 
-    @action(methods=("get",), detail=False)
-    def recent(self, request):
-        """View-action that returns response with the 5 last added links"""
-        recent_links = LinkRepository.get_five_recent_links()
+    @action(methods=("get",), detail=False, permission_classes=(IsAuthenticated,))
+    def own(self, request):
+        """View-action that returns only request.user's links"""
+        recent_links = self.filter_queryset(
+            LinkRepository.get_links_of_user(user=self.request.user)
+        )
 
         page = self.paginate_queryset(recent_links)
         if page is not None:

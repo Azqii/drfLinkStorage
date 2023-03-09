@@ -1,6 +1,9 @@
+from django.contrib.auth import get_user_model
 from django.db.models import QuerySet
 
 from .models import Link
+
+User = get_user_model()
 
 
 class LinkRepository:
@@ -10,6 +13,6 @@ class LinkRepository:
         return Link.objects.all()
 
     @staticmethod
-    def get_five_recent_links() -> QuerySet:
-        """Returns 5 last added links"""
-        return LinkRepository.get_links().order_by("-time_created")[:5]
+    def get_links_of_user(user: User) -> QuerySet:
+        """Returns links added by user"""
+        return Link.objects.filter(added_by=user)

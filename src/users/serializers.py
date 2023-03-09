@@ -25,7 +25,7 @@ class FullUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = "__all__"
+        exclude = ("groups", "user_permissions")
 
     def get_days_registered(self, obj):
         return (now() - obj.date_joined).days
