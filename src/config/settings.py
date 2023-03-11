@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "djoser",
     "debug_toolbar",
     "djcelery_email",
+    "drf_spectacular",
 
     # custom apps
     "users.apps.UsersConfig",
@@ -159,7 +160,8 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication"
     ),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
-    "PAGE_SIZE": 15
+    "PAGE_SIZE": 15,
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema"
 }
 
 # Djoser Settings
@@ -191,4 +193,12 @@ SIMPLE_JWT = {
     "UPDATE_LAST_LOGIN": True,
 
     "AUTH_HEADER_TYPES": ("JWT",)
+}
+
+# Spectacular Settings
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "LinkStorage",
+    "VERSION": "1.0.0",
+    "SERVER_INCLUDE_SCHEMA": True
 }

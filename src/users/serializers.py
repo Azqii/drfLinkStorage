@@ -7,7 +7,7 @@ from links.serializers import LinkSerializer
 User = get_user_model()
 
 
-class UserSerializer(serializers.ModelSerializer):
+class DefaultUserSerializer(serializers.ModelSerializer):
     """The ModelSerializer for the User model"""
 
     class Meta:

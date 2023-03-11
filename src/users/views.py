@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from .repository import UserRepository
-from .serializers import UserSerializer, FullUserSerializer
+from .serializers import DefaultUserSerializer, FullUserSerializer
 
 
 class UserReadOnlyViewSet(ReadOnlyModelViewSet):
@@ -11,4 +11,4 @@ class UserReadOnlyViewSet(ReadOnlyModelViewSet):
     def get_serializer_class(self):
         if self.request.user.is_staff:
             return FullUserSerializer
-        return UserSerializer
+        return DefaultUserSerializer
