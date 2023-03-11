@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "djoser",
     "debug_toolbar",
+    "djcelery_email",
 
     # custom apps
     "users.apps.UsersConfig",
@@ -144,7 +145,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email Settings
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
+CELERY_EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # DRF Settings
 
